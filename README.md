@@ -1,12 +1,13 @@
 # QuietDone Backend
 
-Starter Express.js backend for the QuietDone SaaS application. It accepts document uploads, analyzes content with OpenAI, and runs transformation tasks.
+Starter Express.js backend for the QuietDone SaaS application. It now includes a simple Tailwind CSS frontend for uploading documents, analyzing them with OpenAI, and running transformation tasks.
 
 ## Features
 - **/upload** – upload PDF, DOCX, TXT, or CSV files
 - **/analyze** – summarize an uploaded file and suggest output formats
 - **/generate** – transform the file based on a chosen goal
 - `.env` support for storing the OpenAI key
+- Tailwind-styled UI in `public/index.html`
 - Ready to deploy to Render.com
 
 ## Running Locally
@@ -19,7 +20,7 @@ Starter Express.js backend for the QuietDone SaaS application. It accepts docume
    cp .env.example .env
    # edit .env and set OPENAI_API_KEY
    ```
-3. Start the server:
+3. Start the server and visit `http://localhost:3000` in your browser:
    ```bash
    npm start
    ```
@@ -43,6 +44,9 @@ to `src/index.js`.
 ## Folder Structure
 ```
 quietdone-backend
+├── public
+│   ├── index.html
+│   └── main.js
 ├── src
 │   └── index.js
 ├── .env.example

@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+const publicDir = path.join(__dirname, '..', 'public');
+app.use(express.static(publicDir));
 
 // ensure uploads directory exists
 const uploadDir = path.join(__dirname, '..', 'uploads');
