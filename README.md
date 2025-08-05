@@ -1,6 +1,6 @@
-# QuietDone Backend
+# DocDone Backend
 
-Starter Express.js backend for the QuietDone SaaS application. It accepts document uploads, analyzes content with OpenAI, and runs transformation tasks.
+Starter Express.js backend for the DocDone SaaS application. It accepts document uploads, analyzes content with OpenAI, and runs transformation tasks. The service responds with friendly, branded messages to make interaction simple and pleasant.
 
 ## Features
 - **/upload** – upload PDF, DOCX, TXT, or CSV files
@@ -44,7 +44,7 @@ to `src/index.js`.
 
 ## Folder Structure
 ```
-quietdone-backend
+docdone-backend
 ├── src
 │   └── index.js
 ├── .env.example

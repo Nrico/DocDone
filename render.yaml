@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: quietdone-backend
+    name: docdone-backend
     env: node
     buildCommand: npm install
     startCommand: npm start
