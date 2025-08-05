@@ -32,6 +32,8 @@ Starter Express.js backend for the QuietDone SaaS application. It accepts docume
 4. Add the `OPENAI_API_KEY` environment variable in the Render service settings.
 5. Deploy; Render will build and serve your backend automatically.
 
+You can also deploy via Render's [Blueprints](https://render.com/docs/blueprint-spec) using the included `render.yaml` file.
+
 ## Future Frontend Integration
 When connecting a frontend, you may need CORS support. Install the `cors` package and add:
 ```javascript

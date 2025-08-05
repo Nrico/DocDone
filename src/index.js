@@ -10,6 +10,11 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
+// basic health check route
+app.get('/', (req, res) => {
+  res.send('QuietDone backend is running.');
+});
+
 // ensure uploads directory exists
 const uploadDir = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(uploadDir)) {
