@@ -1,57 +1,44 @@
-# DocDone Backend
+# DocDone Full Stack Demo
 
-Starter Express.js backend for the DocDone SaaS application. It accepts document uploads, analyzes content with OpenAI, and runs transformation tasks. The service responds with friendly, branded messages to make interaction simple and pleasant.
+A simple Node.js + Express backend with a static HTML/JS frontend. Users upload a document, the server analyzes it with OpenAI, and suggests transformations. Selecting a suggestion generates new content.
 
 ## Features
-- **/upload** – upload PDF, DOCX, TXT, or CSV files
-- **/analyze** – summarize an uploaded file and suggest output formats
-- **/generate** – transform the file based on a chosen goal
-- `.env` support for storing the OpenAI key
-- Ready to deploy to Render.com
+- Upload `.pdf`, `.docx`, `.txt`, or `.xlsx` files
+- Summarize files using OpenAI's `gpt-4o` model
+- Suggest possible outputs with fake cost estimates
+- Generate the selected output with optional extra notes
+- Static frontend using Tailwind CSS via CDN
+- Ready for deployment on [Render.com](https://render.com)
 
 ## Running Locally
-1. Install dependencies:
+1. Install dependencies
    ```bash
    npm install
    ```
-2. Copy the example environment file and add your [OpenAI API key](https://platform.openai.com/account/api-keys):
+2. Configure environment
    ```bash
    cp .env.example .env
-   # edit .env and set OPENAI_API_KEY
+   # set OPENAI_API_KEY in .env
    ```
-3. Start the server:
+3. Start the server
    ```bash
    npm start
    ```
-   The server listens on `http://localhost:3000` by default.
+4. Visit `http://localhost:3000` and upload a document.
 
-## Deploying to Render.com
-1. Push this repository to GitHub.
-2. In the Render dashboard, create a **New Web Service** and connect it to the GitHub repo.
-3. Use `npm install` as the build command and `npm start` as the start command.
-4. Add the `OPENAI_API_KEY` environment variable in the Render service settings.
-5. Deploy; Render will build and serve your backend automatically.
-
-You can also deploy via Render's [Blueprints](https://render.com/docs/blueprint-spec) using the included `render.yaml` file.
-
-## Future Frontend Integration
-When connecting a frontend, you may need CORS support. Install the `cors` package and add:
-```javascript
-const cors = require('cors');
-app.use(cors());
-```
-to `src/index.js`.
+## Deployment to Render
+1. Push the repository to GitHub
+2. In Render, create a new web service and connect the repo
+3. Use `npm install` as the build command and `npm start` as the start command
+4. Set the `OPENAI_API_KEY` environment variable
+5. Deploy
 
 ## Folder Structure
 ```
-docdone-backend
-├── src
-│   └── index.js
-├── .env.example
-├── .gitignore
-├── package.json
-└── README.md
+public/       - frontend HTML/JS
+routes/       - API routes
+controllers/  - request handlers
+utils/        - helper utilities (e.g., extractText)
+uploads/      - temporary file storage (ignored by git)
+src/          - server entry point
 ```
-
-## License
-MIT

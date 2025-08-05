@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DocDone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8">
+  <h1 class="text-2xl font-bold mb-4">DocDone Demo</h1>
+  <input id="file" type="file" class="mb-4 border p-2" />
+  <div id="summary" class="my-4"></div>
+  <div id="suggestions" class="flex flex-wrap gap-2 mb-4"></div>
+  <textarea id="notes" class="border p-2 w-full mb-2" placeholder="Extra notes..."></textarea>
+  <input id="logo" type="file" class="mb-4 border p-2" />
+  <button id="generate" class="bg-blue-500 text-white px-4 py-2 rounded">Generate Output</button>
+  <div id="result" class="mt-4 whitespace-pre-wrap"></div>
+  <script src="script.js"></script>
+</body>
+</html>
