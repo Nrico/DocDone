@@ -12,7 +12,7 @@ app.use(express.json());
 
 // basic health check route
 app.get('/', (req, res) => {
-  res.send('QuietDone backend is running.');
+  res.send('DocDone backend is running. Upload files via POST /upload.');
 });
 
 // ensure uploads directory exists
@@ -36,7 +36,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowedExt.includes(ext)) cb(null, true);
-    else cb(new Error('Only PDF, DOCX, TXT, and CSV files are allowed.'));
+    else cb(new Error('DocDone supports only PDF, DOCX, TXT, and CSV files.'));
   },
 });
 
@@ -63,7 +63,11 @@ app.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  res.json({ fileId: req.file.filename, originalName: req.file.originalname });
+  res.json({
+    message: 'File uploaded successfully to DocDone.',
+    fileId: req.file.filename,
+    originalName: req.file.originalname,
+  });
 });
 
 app.post('/analyze', async (req, res) => {
@@ -78,10 +82,13 @@ app.post('/analyze', async (req, res) => {
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
     });
-    res.json({ analysis: completion.choices[0].message.content });
+    res.json({
+      message: 'Analysis complete.',
+      analysis: completion.choices[0].message.content,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Analysis failed' });
+    res.status(500).json({ error: 'DocDone could not analyze your file. Please try again later.' });
   }
 });
 
@@ -99,15 +106,29 @@ app.post('/generate', async (req, res) => {
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
     });
-    res.json({ result: completion.choices[0].message.content });
+    res.json({
+      message: `Generated ${goal} successfully.`,
+      result: completion.choices[0].message.content,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Generation failed' });
+    res.status(500).json({ error: 'DocDone could not complete this request. Please try again later.' });
   }
 });
 
 const PORT = process.env.PORT || 3000;
+app.use((err, req, res, next) => {
+  if (err) {
+    if (err.message && err.message.includes('DocDone supports only')) {
+      return res.status(400).json({ error: err.message });
+    }
+    console.error(err);
+    return res.status(500).json({ error: 'Unexpected server error. Please try again later.' });
+  }
+  next();
+});
+
 app.listen(PORT, () => {
-  console.log(`QuietDone backend listening on port ${PORT}`);
+  console.log(`DocDone backend listening on port ${PORT}. Submit files via POST /upload.`);
 });
 
