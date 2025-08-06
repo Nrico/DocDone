@@ -30,16 +30,18 @@ Starter Express.js backend for the DocDone SaaS application. It accepts document
    ```bash
    docker build -t docdone .
    ```
-2. Copy the example environment file and add your [OpenAI API key](https://platform.openai.com/account/api-keys):
+2. Start the container and pass your [OpenAI API key](https://platform.openai.com/account/api-keys):
+   ```bash
+   docker run -e OPENAI_API_KEY=your_openai_api_key -p 3000:3000 docdone
+   ```
+   The server listens on `http://localhost:3000` by default.
+
+   Alternatively, you can still use an environment file:
    ```bash
    cp .env.example .env
    # edit .env and set OPENAI_API_KEY
-   ```
-3. Start the container:
-   ```bash
    docker run --env-file .env -p 3000:3000 docdone
    ```
-   The server listens on `http://localhost:3000` by default.
 
 ## Deploying to Render.com
 1. Push this repository to GitHub.
