@@ -1,5 +1,9 @@
 FROM node:18-alpine
 
+# Allow passing the OpenAI API key at build or run time
+ARG OPENAI_API_KEY
+ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+
 # Create app directory
 WORKDIR /app
 
