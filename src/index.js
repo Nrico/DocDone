@@ -10,9 +10,11 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-// basic health check route
+// serve frontend
+const publicDir = path.join(__dirname, '..', 'public');
+app.use(express.static(publicDir));
 app.get('/', (req, res) => {
-  res.send('DocDone backend is running. Upload files via POST /upload.');
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 // ensure uploads directory exists
