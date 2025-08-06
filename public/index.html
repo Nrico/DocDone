@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocDone</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    h1 { color: #333; }
+    form { margin-bottom: 1rem; }
+    label { display: block; margin-top: 1rem; }
+    input[type="text"], input[type="file"] { width: 100%; padding: 0.5rem; }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; }
+    #result { white-space: pre-wrap; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>DocDone</h1>
+  <form id="uploadForm">
+    <label for="file">Choose a document:</label>
+    <input type="file" id="file" name="file" required />
+    <button type="submit">Upload</button>
+  </form>
+  <form id="analyzeForm" style="display: none;">
+    <input type="hidden" id="fileId" />
+    <button type="submit">Analyze</button>
+  </form>
+  <form id="generateForm" style="display: none;">
+    <label for="goal">What do you want to generate?</label>
+    <input type="text" id="goal" placeholder="e.g. presentation" />
+    <button type="submit">Generate</button>
+  </form>
+  <div id="result"></div>
+  <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const analyzeForm = document.getElementById('analyzeForm');
+    const generateForm = document.getElementById('generateForm');
+    const fileIdInput = document.getElementById('fileId');
+    const resultDiv = document.getElementById('result');
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById('file');
+      const data = new FormData();
+      data.append('file', fileInput.files[0]);
+      const res = await fetch('/upload', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.fileId) {
+        fileIdInput.value = json.fileId;
+        analyzeForm.style.display = 'block';
+        generateForm.style.display = 'block';
+        resultDiv.textContent = 'File uploaded. You can now analyze or generate.';
+      } else {
+        resultDiv.textContent = json.error || 'Upload failed';
+      }
+    });
+
+    analyzeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileId: fileIdInput.value })
+      });
+      const json = await res.json();
+      resultDiv.textContent = json.analysis || json.error || 'Analysis failed';
+    });
+
+    generateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const goal = document.getElementById('goal').value;
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileId: fileIdInput.value, goal })
+      });
+      const json = await res.json();
+      resultDiv.textContent = json.result || json.error || 'Generation failed';
+    });
+  </script>
+</body>
+</html>

@@ -1,8 +1,9 @@
-# DocDone Backend
+# DocDone
 
-Starter Express.js backend for the DocDone SaaS application. It accepts document uploads, analyzes content with OpenAI, and runs transformation tasks. The service responds with friendly, branded messages to make interaction simple and pleasant.
+Express.js service with a minimal frontend for the DocDone SaaS application. Upload a document, analyze it with OpenAI and request a transformation right from the browser. The service responds with friendly, branded messages to make interaction simple and pleasant.
 
 ## Features
+- Browser UI served from `/` for uploading and processing files
 - **/upload** – upload PDF, DOCX, TXT, or CSV files
 - **/analyze** – summarize an uploaded file and suggest output formats
 - **/generate** – transform the file based on a chosen goal
@@ -39,7 +40,7 @@ Starter Express.js backend for the DocDone SaaS application. It accepts document
    ```bash
    docker run --env-file .env -p 3000:3000 docdone
    ```
-   The server listens on `http://localhost:3000` by default.
+   The server listens on `http://localhost:3000` by default. Visit this URL in a browser to use the frontend.
 
 ## Deploying to Render.com
 1. Push this repository to GitHub.
@@ -60,9 +61,11 @@ to `src/index.js`.
 
 ## Folder Structure
 ```
-docdone-backend
+docdone
 ├── src
 │   └── index.js
+├── public
+│   └── index.html
 ├── .env.example
 ├── .gitignore
 ├── package.json
