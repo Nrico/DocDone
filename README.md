@@ -43,6 +43,9 @@ Starter Express.js backend for the DocDone SaaS application. It accepts document
    docker run --env-file .env -p 3000:3000 docdone
    ```
 
+## Frontend
+Visit `http://localhost:3000` to access the DocDone web interface. It lets you upload a document, run an analysis, or generate new output directly from your browser. The frontend is included in the Docker image, so it works the same when running the container.
+
 ## Deploying to Render.com
 1. Push this repository to GitHub.
 2. In the Render dashboard, create a **New Web Service** and connect it to the GitHub repo.
@@ -52,19 +55,15 @@ Starter Express.js backend for the DocDone SaaS application. It accepts document
 
 You can also deploy via Render's [Blueprints](https://render.com/docs/blueprint-spec) using the included `render.yaml` file.
 
-## Future Frontend Integration
-When connecting a frontend, you may need CORS support. Install the `cors` package and add:
-```javascript
-const cors = require('cors');
-app.use(cors());
-```
-to `src/index.js`.
-
 ## Folder Structure
 ```
 docdone-backend
 ├── src
 │   └── index.js
+├── public
+│   ├── index.html
+│   ├── script.js
+│   └── styles.css
 ├── .env.example
 ├── .gitignore
 ├── package.json
